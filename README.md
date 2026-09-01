@@ -37,7 +37,9 @@ comes up below.
 3. **(Optional, but expected) Customize the look** — colors and fonts, by
    prompting HokieAI.
 
-Each is explained step by step below.
+Each is explained step by step below. If your real schedule doesn't have
+exactly five courses, see [Advanced: Adding or removing a
+course](#advanced-adding-or-removing-a-course) after Step 2.
 
 ---
 
@@ -235,6 +237,88 @@ with plain characters:
 
 ---
 
+## Advanced: Adding or removing a course
+
+**This part is advanced — most students won't need it.** If your schedule
+happens to have four courses instead of five, or six, this section covers
+how to add or remove a course page. It goes beyond editing text inside an
+existing file, which is why it's worth being extra careful here: a mistake
+in these steps (a missing `---`, a duplicate `course_number`) is more
+likely to break the build than a typo in a paragraph of your review would.
+If anything below feels unclear, that's exactly the kind of question worth
+taking to HokieAI before you touch a file — prompt suggestions are below.
+
+### How this works, briefly
+
+Every file in the `_courses` folder automatically becomes a course page —
+there's no separate list anywhere else that needs to be updated. The home
+page builds its list by reading every file in `_courses` and sorting them
+by the `course_number` value in each file's front matter. That means:
+
+- Adding a file to `_courses` adds a course.
+- Deleting a file from `_courses` removes a course.
+- The order on the home page comes from `course_number`, not the filename.
+
+### Adding a course
+
+1. Open the `_courses` folder, open an existing file (like `course-05.md`)
+   to use as a starting point, and copy its entire contents.
+2. Create a new file in `_courses` — click **Add file → Create new file**,
+   name it something like `course-06.md`, and paste in the content you
+   copied.
+3. Edit the front matter: give it a `course_number` that no other course
+   file is using (for a 6th course, `6`), and fill in the rest of the
+   fields (`course_code`, `course_title`, `meeting_time`, `location`,
+   `instructor_name`, `instructor_title`, `instructor_department`) the
+   same way you did in Step 2 above.
+4. Replace the placeholder body text with your real course and instructor
+   research, same as any other course page.
+5. Commit the new file. Check the **Actions** tab for a green checkmark,
+   then confirm the new course shows up on your live home page.
+
+### Removing a course
+
+1. Open the `_courses` folder and open the file for the course you want to
+   remove.
+2. Click the trash-can icon (or open the file, click the pencil icon to
+   edit it, then use the **"..."** menu and choose **Delete file**).
+3. Commit the deletion. Check the **Actions** tab for a green checkmark,
+   then confirm the course is gone from your live home page.
+
+You don't need to renumber the remaining `course_number` values or rename
+the remaining files — Jekyll just sorts whatever course files exist.
+
+### Suggested HokieAI prompts for this step
+
+Because this involves editing the repository's structure instead of just
+filling in a template, it's a good idea to have HokieAI check your plan
+before you commit, or check your work after. Always paste your
+repository's URL at the top of the prompt, so HokieAI has the right
+context for your specific project:
+
+> My repository is `https://github.com/[your-username]/myawesomesemester`,
+> a Jekyll site built from a "My Awesome Semester" template. It has a
+> `_courses` collection — one Markdown file per class, each with front
+> matter fields `course_number`, `course_code`, `course_title`,
+> `meeting_time`, `location`, `instructor_name`, `instructor_title`, and
+> `instructor_department`, followed by Markdown body sections. The home
+> page and course-page layout read these files automatically; nothing
+> else needs to reference them by name.
+>
+> I want to add a 6th course to this site. Walk me through, step by step,
+> exactly what file to create, what to name it, and what the front matter
+> should contain, matching the existing pattern exactly. Point out
+> anything I could get wrong that would break the Jekyll build.
+
+For removing a course, swap the last paragraph for something like:
+
+> I want to remove course 3 from this site entirely. Tell me exactly what
+> to delete, and whether anything else in a Jekyll site like this could
+> still be referencing it (broken links, sitemap entries, etc.) that I'd
+> need to double-check afterward.
+
+---
+
 ## Checking your build
 
 Every time you commit a change, GitHub automatically tries to rebuild your
@@ -299,8 +383,13 @@ why your class asks you to use it here instead of a generic outside tool.
 1. In this repository, open **`assets/css/main.scss`** and copy the
    `:root { ... }` block shown above (or however it currently reads).
 2. Open a new HokieAI chat and paste in a prompt like this one — fill in
-   the bracketed part with the look you're going for:
+   both bracketed parts: your repository's URL, and the look you're going
+   for. Pasting the URL at the top of every prompt gives HokieAI context
+   on the actual project you're working on, not a generic template:
 
+   > Here's my repository, for context:
+   > `https://github.com/[your-username]/myawesomesemester`
+   >
    > I have a Jekyll website's CSS custom properties, shown below, for a
    > "My Awesome Semester" course-and-teacher site built for a Virginia
    > Tech COMM major. Right now it's a deliberately plain black-and-white
@@ -333,14 +422,19 @@ why your class asks you to use it here instead of a generic outside tool.
 ### A few prompt variations to try
 
 If you're not sure where to start, try asking HokieAI for a few different
-directions and compare them before committing to one:
+directions and compare them before committing to one. Keep leading with
+your repository's URL each time, the same way as above:
 
-- *"Make it feel like game day at Lane Stadium — bold, high energy, but
+- *"Here's my repo: `https://github.com/[your-username]/myawesomesemester`.
+  Make it feel like game day at Lane Stadium — bold, high energy, but
   still readable."*
-- *"Make it feel like a minimalist academic CV — restrained, serious,
-  lots of whitespace."*
-- *"Make it feel like a cozy study nook — warm, soft, slightly informal."*
-- *"Keep it black and white, but make the typography more distinctive."*
+- *"Here's my repo: `https://github.com/[your-username]/myawesomesemester`.
+  Make it feel like a minimalist academic CV — restrained, serious, lots
+  of whitespace."*
+- *"Here's my repo: `https://github.com/[your-username]/myawesomesemester`.
+  Make it feel like a cozy study nook — warm, soft, slightly informal."*
+- *"Here's my repo: `https://github.com/[your-username]/myawesomesemester`.
+  Keep it black and white, but make the typography more distinctive."*
 
 You can also ask HokieAI to explain *why* a color palette works (or
 doesn't) for readability and contrast — that's useful context for
